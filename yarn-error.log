@@ -1,0 +1,52 @@
+Arguments: 
+  /usr/local/bin/node /opt/homebrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js add cors
+
+PATH: 
+  /Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/apache-maven-3.6.3/bin:.:/usr/local/apache-maven-3.6.3/bin:.
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  16.1.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/body-parser: ETIMEDOUT
+      at Timeout._onTimeout (/opt/homebrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:141409:19)
+      at listOnTimeout (node:internal/timers:557:17)
+      at processTimers (node:internal/timers:500:7)
+
+npm manifest: 
+  {
+    "name": "myfile",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/fange123/node_study.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/fange123/node_study/issues"
+    },
+    "homepage": "https://github.com/fange123/node_study#readme",
+    "dependencies": {
+      "body-parser": "^1.20.0",
+      "express": "^4.17.1",
+      "moment": "^2.29.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
