@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h2>用户名：<span id="username"></span></h2>
+
+  <button id="logout">退出登录</button>
+
+  <script src="./jquery-1.4.4.min.js"></script>
+
+  <script>
+
+    $(function () {
+      //发请求
+      $.ajax({
+        method: "GET",
+        url: "http://127.0.0.1/username",
+        success: function (data) {
+          if (data.success && data.username) {
+            $("#username").append(data.username);
+          } else {
+            const a = alert('请用户先进行登录')
+
+            window.location.href = 'http://127.0.0.1/login.html'
+          }
+
+        }
+
+      });
+
+      $("#logout").click(function () {
+        $.ajax({
+          type: "POST",
+          url: "http://127.0.0.1/logout",
+          success: function (data) {
+            if (data.success) {
+              window.location.href = 'http://127.0.0.1/login.html'
+            }
+          }
+        })
+      })
+    })
+  </script>
+
+</body>
+
+</html>
