@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+const joi = require("joi");
 
 //* 配置cors跨域 将cors注册为全局中间件
 app.use(cors());
@@ -24,6 +25,14 @@ app.use(function (req, res, next) {
 
 const userRouter = require("./router/user");
 app.use("/api", userRouter);
+
+//* 定义错误级别中间件
+app.use((error, req, res, next) => {
+  //* 验证失败错误
+  if (error instanceof joi.ValidationError) return res.cc(error);
+  //未知错误
+  res.cc(error);
+});
 
 app.listen(3007, () => {
   console.log("listening on http://127.0.0.1:3007");

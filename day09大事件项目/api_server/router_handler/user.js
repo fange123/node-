@@ -5,10 +5,10 @@ const bcrypt = require("bcryptjs"); //加密
 
 exports.regUser = (req, res) => {
   const userInfo = req.body;
-  if (!userInfo.username || !userInfo.password) {
-    // return res.send({ message: "用户名或密码不合法", success: false });
-    return res.cc("用户名或密码不合法");
-  }
+  // if (!userInfo.username || !userInfo.password) {
+  //   // return res.send({ message: "用户名或密码不合法", success: false });
+  //   return res.cc("用户名或密码不合法");
+  // }
 
   //* 定义sql语句，判断用户名是否被占用
   const sqlStr = "select * from ev_users where username = ?";
