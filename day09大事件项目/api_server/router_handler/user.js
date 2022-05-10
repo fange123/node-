@@ -2,6 +2,8 @@
 
 const db = require("../db");
 const bcrypt = require("bcryptjs"); //加密
+const config = require("../config");
+const jwt = require("jsonwebtoken"); //生成token
 
 exports.regUser = (req, res) => {
   const userInfo = req.body;
@@ -50,8 +52,24 @@ exports.regUser = (req, res) => {
 
 exports.login = (req, res) => {
   const userInfo = req.body;
-  if (userInfo.username !== "") {
-    return res.send({ message: "用户名或密码错误", success: false });
-  }
-  res.send("login ok");
+  const sqlStr = "select * from ev_users where username = ?";
+  //* 查找用户是否存在
+  db.query(sqlStr, userInfo.username, (err, result) => {
+    if (err) return res.cc(err);
+    if (result.length !== 1) return res.cc("用户不存在");
+
+    //* 判断密码是否正确(用户提交的密码，数据库存储的密码)
+    const _result = bcrypt.compareSync(userInfo.password, result[0].password);
+    if (!_result) return res.cc("密码错误");
+
+    //* 在服务器生成jwt token
+    //* 需要除去用户敏感信息password,user_pic等
+    const user = { ...result[0], password: "", user_pic: "" };
+    //* 对用户的信息加密
+    const tokenStr = jwt.sign(user, config.jwtSecretKey, {
+      expiresIn: config.expiresIn,
+    });
+
+    res.send({ message: "登录成功", success: true, token: tokenStr });
+  });
 };

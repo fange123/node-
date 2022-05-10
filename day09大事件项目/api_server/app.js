@@ -23,6 +23,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+//* 在路由之前配置解析token的中间件
+const expressJwt = require("express-jwt");
+const config = require("./config");
+app.use(
+  expressJwt({ secret: config.jwtSecretKey, algorithms: ["HS256"] }).unless({
+    path: [/^\/api\//],
+  })
+);
+
 const userRouter = require("./router/user");
 app.use("/api", userRouter);
 
@@ -30,6 +39,9 @@ app.use("/api", userRouter);
 app.use((error, req, res, next) => {
   //* 验证失败错误
   if (error instanceof joi.ValidationError) return res.cc(error);
+
+  //* token 认证失败
+  if (error.name === "UnauthorizedError") return res.cc("身份认证失败");
   //未知错误
   res.cc(error);
 });
