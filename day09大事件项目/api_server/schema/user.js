@@ -36,3 +36,12 @@ exports.update_password_schema = {
     newPwd: joi.not(joi.ref("oldPwd")).concat(password),
   },
 };
+
+//* 定义base64格式的图片的验证规则
+
+const avatar = joi.string().dataUri().required();
+exports.update_avatar_schema = {
+  body: {
+    avatar,
+  },
+};

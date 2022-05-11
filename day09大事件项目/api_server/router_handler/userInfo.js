@@ -50,3 +50,14 @@ exports.updatePassword = (req, res) => {
     });
   });
 };
+
+exports.updateAvatar = (req, res) => {
+  //* 定义更新图片的sql语句
+  const sqlStr = "update ev_users set user_pic = ? where id = ?";
+  db.query(sqlStr, [req.body.avatar, req.user.id], (err, result) => {
+    if (err) return res.cc(err);
+    if (result.affectedRows !== 1) return res.cc("头像更新失败");
+
+    res.cc("头像更新成功", true);
+  });
+};
