@@ -27,3 +27,12 @@ exports.update_userInfo_schema = {
     email,
   },
 };
+
+//* 更新密码的验证对象
+exports.update_password_schema = {
+  body: {
+    oldPwd: password,
+    //新旧密码不能一样
+    newPwd: joi.not(joi.ref("oldPwd")).concat(password),
+  },
+};
