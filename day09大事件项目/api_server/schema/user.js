@@ -13,3 +13,17 @@ const password = joi
 exports.reg_login_schema = {
   body: { username, password },
 };
+
+//* 定义 id nickname 和 email的验证规则
+
+const id = joi.number().integer().min(1).required();
+const nickname = joi.string().required();
+const email = joi.string().email().required();
+exports.update_userInfo_schema = {
+  //# 对req.body里面的属性进行验证
+  body: {
+    id,
+    nickname,
+    email,
+  },
+};
