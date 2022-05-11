@@ -35,6 +35,9 @@ app.use(
 const userRouter = require("./router/user");
 app.use("/api", userRouter);
 
+const userInfoRouter = require("./router/userInfo");
+app.use("/my", userInfoRouter);
+
 //* 定义错误级别中间件
 app.use((error, req, res, next) => {
   //* 验证失败错误
