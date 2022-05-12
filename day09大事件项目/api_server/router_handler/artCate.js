@@ -75,3 +75,49 @@ exports.getArtCateBiId = (req, res) => {
     });
   });
 };
+
+exports.updateCateById = (req, res) => {
+  //* 查一下有没有其他id的名称或者别名有重复的
+  const sqlStr =
+    "select * from ev_article_cate where id <> ? && (name =? or alias = ?)";
+
+  db.query(
+    sqlStr,
+    [req.body.id, req.body.name, req.body.alias],
+    (err, result) => {
+      if (err) return res.cc(err);
+      //* 1.两个都占用了并且不在同一行
+      if (result.length === 2) return res.cc("名称和别名均被占用");
+
+      //* 2.两个都占用了并且在同一行
+      if (
+        result.length === 1 &&
+        result[0].name === req.body.name &&
+        result[0].alias === req.body.alias
+      )
+        return res.cc("名称和别名均被占用");
+
+      //* 3.名称被占用
+      if (result.length === 1 && result[0].name === req.body.name)
+        return res.cc("名称被占用");
+
+      //* 4.别名被占用
+      if (result.length === 1 && result[0].alias === req.body.alias)
+        return res.cc("别名被占用");
+
+      //* 更新表内数据
+      const sqlStr = "update ev_article_cate set ? where id = ?";
+
+      const queryValue = {
+        name: req.body.name,
+        alias: req.body.alias,
+      };
+      db.query(sqlStr, [queryValue, req.body.id], (err, result) => {
+        if (err) return res.cc(err);
+        if (result.affectedRows !== 1) return res.cc("更新失败");
+
+        res.cc("更新成功", true);
+      });
+    }
+  );
+};

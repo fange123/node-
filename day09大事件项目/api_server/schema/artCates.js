@@ -27,3 +27,12 @@ exports.get_cate_schema = {
     id,
   },
 };
+
+//* 更新文章分类验证规则
+exports.update_cate_schema = {
+  body: {
+    id,
+    name,
+    alias,
+  },
+};
