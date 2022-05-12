@@ -20,3 +20,10 @@ exports.delete_cate_schema = {
     id,
   },
 };
+
+//* 根据id查详细信息的id规则
+exports.get_cate_schema = {
+  params: {
+    id,
+  },
+};

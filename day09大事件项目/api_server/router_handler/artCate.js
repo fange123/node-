@@ -60,3 +60,18 @@ exports.deleteCateById = (req, res) => {
     res.cc("删除成功", true);
   });
 };
+
+//* 根据id获取文章分类
+exports.getArtCateBiId = (req, res) => {
+  const sqlStr = "select * from ev_article_cate where id =?";
+  db.query(sqlStr, req.params.id, (err, result) => {
+    if (err) return res.cc(err);
+    if (result.length !== 1) return res.cc("查询失败");
+
+    res.send({
+      message: "查询成功",
+      success: true,
+      data: result[0],
+    });
+  });
+};
