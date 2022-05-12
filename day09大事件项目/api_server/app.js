@@ -4,6 +4,9 @@ const cors = require("cors");
 const app = express();
 const joi = require("joi");
 
+//* 托管静态资源文件
+app.use("/uploads", express.static("./uploads"));
+
 //* 配置cors跨域 将cors注册为全局中间件
 app.use(cors());
 
