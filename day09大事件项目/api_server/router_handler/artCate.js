@@ -49,3 +49,14 @@ exports.addArticleCates = (req, res) => {
     });
   });
 };
+
+exports.deleteCateById = (req, res) => {
+  //* 定义标记删除的语句
+  const sqlStr = "update ev_article_cate set is_delete = 1 where id = ?";
+
+  db.query(sqlStr, req.params.id, (err, result) => {
+    if (err) return res.cc(err);
+    if (result.affectedRows !== 1) return res.cc("删除失败");
+    res.cc("删除成功", true);
+  });
+};
