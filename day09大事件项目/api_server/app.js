@@ -38,6 +38,9 @@ app.use("/api", userRouter);
 const userInfoRouter = require("./router/userInfo");
 app.use("/my", userInfoRouter);
 
+const artCateRouter = require("./router/artCates");
+app.use("/my/article", artCateRouter);
+
 //* 定义错误级别中间件
 app.use((error, req, res, next) => {
   //* 验证失败错误
